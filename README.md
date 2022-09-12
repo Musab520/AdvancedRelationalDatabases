@@ -24,15 +24,27 @@ Isolation means multiple transactions working concurrenty without interfering wi
 Finally, Durability is achieved by making sure modifications to the database are persisted. One durability technique is the Write Ahead Log(WAL), which is writing changes to the DB to logs, and therefore commits arent actually affecting the database. After the WAL file reaches a certain limit a checkpoint is reached and so all changes are applied to the database. Read more about WAL [here](https://sqlite.org/wal.html).
 
 ## Isolation Levels:
-Isolation levels exist to choose the deegree in which we want our database to be isolated. They are split into Locking and Row Versioning. Locking Isolation levels consist of Read Uncommited, Read Commited, Repeatable Read, and Serializable while Snapshot Isolation uses Row Versioning. Read more about Locking vs Row Versioning [here](https://docs.microsoft.com/en-us/sql/relational-databases/sql-server-transaction-locking-and-row-versioning-guide?view=sql-server-ver16).
+Isolation levels exist to choose the deegree in which we want our database to be isolated. They are split into Locking and Row Versioning. Locking Isolation levels consist of Read Uncommited, Read Commited, Repeatable Read, and Serializable while Snapshot Isolation uses Row Versioning. Read more about Locking vs Row Versioning [here](https://docs.microsoft.com/en-us/sql/relational-databases/sql-server-transaction-locking-and-row-versioning-guide?view=sql-server-ver16). However, each isolation level faces a read phenomena that presents problems. These phenomena are Dirty Reads, Lost Updates, Non-Repeatable Reads, and Phantom Reads. For a full guide on transaction isolation levels and read phenomena as well as shared locks and exclusive locks [click here](https://levelup.gitconnected.com/transaction-isolation-levels-in-ms-sql-guide-for-backend-developers-6a5998e34f6c). 
 
-### Read Uncommited:
+### Read Uncommitted:
+The first isolation level is Read Uncommitted where it allows transactions changes to be visible to each other before any commits. This is possible due to the fact they do not use shared locks when reading data from the database. However, Read Uncommited faces issue with all the Read Phenomena , making it the worst degree of isolation
 
 #### Dirty Reads:
+ Dirty Reads occur when data is read in one transaction, while in another transaction data is updated, and then so when transaction 1 rereads the data is changed.
+ The diagram below explains this well:
+ ![Screenshot 2022-09-12 144815](https://user-images.githubusercontent.com/62875631/189645808-07fc0b7e-6dc7-419b-8b0f-8a4ac16ecf6c.png)
 
 ### Read Commited:
-
+ The second isolation level which is the default in most database systems is Read Committed. This level only allows transactions to see data modified if it has been commited.  Shared locks are aquired on queries that involve reading however the are released as soon as the query is executed. Read Committed still faces problems llke Lost Updates and Repeatable Reads.
 #### Lost Updates and Non-Repeatable Reads:
+Lost Updates occur when a transaction updates a row but it is overwrited by another transaction.
+![Screenshot 2022-09-12 155638](https://user-images.githubusercontent.com/62875631/189659532-69a82cd4-990f-454b-8266-8ca97e122e11.png)
+
+Non-Repeatable Reads:
+When data is read in one transaction, then another transaction updates and commits, then the first transaction rereads to see the data is not the same as the first read.
+![Screenshot 2022-09-12 160143](https://user-images.githubusercontent.com/62875631/189660575-37cf27b8-42a9-4352-977e-72ace6d28b91.png)
+
+
 
 ### Repeatable Read:
 
