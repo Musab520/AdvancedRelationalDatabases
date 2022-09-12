@@ -59,6 +59,7 @@ The final locking isolation level is serializeable which adds shared Lock now ac
 Using Row versioning, Snapshot Isolation works by persisting the version of the database when data is being modified by a transaction , committed data is copied to tempDB and are given version numbers. So when another transaction reads data there is no wait because of locking, since it will receive the version of data from the most recent committed transaction.
 
 ### Serializeable vs Snapshot Isolation:
+While serializeable and snapshot both achieve isolation they have significant differences. Serializeable level uses locking which helps keeps the database consistent and avoids read phenomena however its more prone to deadlocks which can hinder from concurrency. Snapshot uses Row Versioning which helps with increased concurrency however its main disadvantage is its increased tempDB usage from the storage of the row versions. All in all, if your thinking of building a system thats read and write heavy go for serializeable but if your system is just read heavy and not alot of writes go for snapshot.
 
 ## Indexing:
 
