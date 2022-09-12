@@ -44,15 +44,19 @@ Non-Repeatable Reads:
 When data is read in one transaction, then another transaction updates and commits, then the first transaction rereads to see the data is not the same as the first read.
 ![Screenshot 2022-09-12 160143](https://user-images.githubusercontent.com/62875631/189660575-37cf27b8-42a9-4352-977e-72ace6d28b91.png)
 
-
-
-### Repeatable Read:
+### Repeatable Read
+The third isolation level, repeatable read, fixes lost updates and non-repatable reads. In this level shared locks now release after commits so exclusive locks must wait for them to release to operate. However, this level still faces a problem which is Phantom reads.
 
 #### Phantom Reads:
+Phantom reads occur when one transaction reads data, then another transaction inserts new data and the first transaction 
+![Screenshot 2022-09-12 161102](https://user-images.githubusercontent.com/62875631/189662759-28cdd01c-1c57-4269-a291-07a834498c94.png)
+
 
 ### Serializeable:
+The final locking isolation level is serializeable which adds shared Lock now account for the range of data they are reading, so they prevent modifications(Exclusive Locks) that affect the data in the range they are working with.
 
 ### Snapshot Isolation:
+Using Row versioning, Snapshot Isolation works by persisting the version of the database when data is being modified by a transaction , committed data is copied to tempDB and are given version numbers. So when another transaction reads data there is no wait because of locking, since it will receive the version of data from the most recent committed transaction.
 
 ### Serializeable vs Snapshot Isolation:
 
