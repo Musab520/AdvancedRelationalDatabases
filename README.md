@@ -24,6 +24,42 @@ Isolation means multiple transactions working concurrenty without interfering wi
 Finally, Durability is achieved by making sure modifications to the database are persisted. One durability technique is the Write Ahead Log(WAL), which is writing changes to the DB to logs, and therefore commits arent actually affecting the database. After the WAL file reaches a certain limit a checkpoint is reached and so all changes are applied to the database. Read more about WAL [here](https://sqlite.org/wal.html).
 
 ## Isolation Levels:
+Isolation levels exist to choose the deegree in which we want our database to be isolated. They are split into Locking and Row Versioning. Locking Isolation levels consist of Read Uncommited, Read Commited, Repeatable Read, and Serializable while Snapshot Isolation uses Row Versioning. Read more about Locking vs Row Versioning [here](https://docs.microsoft.com/en-us/sql/relational-databases/sql-server-transaction-locking-and-row-versioning-guide?view=sql-server-ver16).
 
+### Read Uncommited:
+
+#### Dirty Reads:
+
+### Read Commited:
+
+#### Lost Updates and Non-Repeatable Reads:
+
+### Repeatable Read:
+
+#### Phantom Reads:
+
+### Serializeable:
+
+### Snapshot Isolation:
+
+### Serializeable vs Snapshot Isolation:
+
+## Indexing:
+
+### Clustered vs Non-Clustered Index:
+
+### Different Types of Index Scans:
+
+### Index Fragmentation:
+
+## Replication:
+
+## Partitioning:
+
+## Horizontal vs Vertical Partitioning:
+
+## Sharding:
+
+## Conclusion:
 
 
