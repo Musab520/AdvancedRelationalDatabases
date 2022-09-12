@@ -60,10 +60,16 @@ Using Row versioning, Snapshot Isolation works by persisting the version of the 
 
 ### Serializeable vs Snapshot Isolation:
 While serializeable and snapshot both achieve isolation they have significant differences. Serializeable level uses locking which helps keeps the database consistent and avoids read phenomena however its more prone to deadlocks which can hinder from concurrency. Snapshot uses Row Versioning which helps with increased concurrency however its main disadvantage is its increased tempDB usage from the storage of the row versions. All in all, if your thinking of building a system thats read and write heavy go for serializeable but if your system is just read heavy and not alot of writes go for snapshot.
+![Screenshot 2022-09-12 195103](https://user-images.githubusercontent.com/62875631/189713777-afc36a34-2202-46fb-a7bc-6acc58dd183b.png)
+
+## Cap Theorem:
 
 ## Indexing:
+We use indexing to increase the speed at which queries are executed when dealing with large databases. When we create an Index on a column, we create a separate data structure that orders the data in way that helps search query efficiency.
+![Screenshot 2022-09-12 200247](https://user-images.githubusercontent.com/62875631/189713796-141df822-6fdb-436e-aaa0-0fe31025f15c.png)
 
 ### Clustered vs Non-Clustered Index:
+
 
 ### Different Types of Index Scans:
 
