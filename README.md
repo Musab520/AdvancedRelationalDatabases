@@ -62,26 +62,43 @@ Using Row versioning, Snapshot Isolation works by persisting the version of the 
 While serializeable and snapshot both achieve isolation they have significant differences. Serializeable level uses locking which helps keeps the database consistent and avoids read phenomena however its more prone to deadlocks which can hinder from concurrency. Snapshot uses Row Versioning which helps with increased concurrency however its main disadvantage is its increased tempDB usage from the storage of the row versions. All in all, if your thinking of building a system thats read and write heavy go for serializeable but if your system is just read heavy and not alot of writes go for snapshot.
 ![Screenshot 2022-09-12 195103](https://user-images.githubusercontent.com/62875631/189713777-afc36a34-2202-46fb-a7bc-6acc58dd183b.png)
 
-## Cap Theorem:
+## CAP Theorem:
+Understanding the CAP Theorem is essential for designing how you want to design a distributed system. CAP stands for Consistency, Availability, and Partition Tolerance. There are three ways to design your system when using the CAP Theorem: CA(Consistent and Available), CP(Consistent and Partition Tolerant), AP (Available and Partition Tolerant). Lets take a ATM system as an example. If using CP, in the event of a partition(network problem, ATM crash), an ATM might close the user out of the system since it doesnt want him to withdraw or deposit and create inconsistent data with the other ATMs. On the other hand, using AP, an ATM can stay active after a partiion and allow withdrawals and deposits, and when the other ATMs come back online they will be updated with new changes. Finally, we can use CA if we think a partition is rare to occur and if it does we can just fix the problem and get it back online later.
+![Screenshot 2022-09-13 114410](https://user-images.githubusercontent.com/62875631/189855513-309e0bee-e1e0-41b2-a955-508f09c244d6.png)
 
 ## Indexing:
-We use indexing to increase the speed at which queries are executed when dealing with large databases. When we create an Index on a column, we create a separate data structure that orders the data in way that helps search query efficiency.
+We use indexing to increase the speed at which queries are executed when dealing with large databases. When we create an Index on a column, we create a separate data structure that orders the data in way that helps search query efficiency. 
 ![Screenshot 2022-09-12 200247](https://user-images.githubusercontent.com/62875631/189713796-141df822-6fdb-436e-aaa0-0fe31025f15c.png)
 
 ### Clustered vs Non-Clustered Index:
-
+Clustered Indexes are made off of the primary key of a table and the leaf nodes for the index contains the row data. Non-Clustered Indexes create a seperate data structure that have reference ids to the row data itself. Clustered indexes physically reorder the table data itself to match the index, while Non-Clustered Indexes logical order does not match the physical order. 
 
 ### Different Types of Index Scans:
-
+Sequential Scan: Regular in order table scan, fast for fetching row from small table, or high amount of rows from large table.
+Index Scan: Scans index for pages that match query then uses reference point to fetch matching rows
+Index Only Scan:  Scans index for pages that match query but data needed is already in index so no need to jump to table (faster than index)
+Bitmap Index Scan: Scans pages for matches with query condition and sets bitmap true for the pages that match, then it just seeks out those specific pages in the heap.
 ### Index Fragmentation:
+Index Fragmentation occurs when modifications to the database cause blank spaces and page splits, resulting in more IO operations to scan the index for what we need.  Index size increases because of blank spaces as well. 
+
+Internal Fragmentation:
+Free Space cause by Inserts or Deletes that make the index store more data and results in more IO operations to read.
+
+Logical Fragmentation:
+Order of pages does not match physical ordering of pages making the searching not sequential
+
+In order to avoid index fragmentation, we can use ever increasing/decreasing keys as to avoid inserts that will cause page splits. Also avoiding updates on keys to avoid page splits. Using index fill factors can help us keep enough space in a page for more inserts anticipating the page split problem. We can use the DBMS to check for fragmentation. If the fragmentation is less than 10% there is no need to fix index. If there is 10%-30% fragmentation, reorganize index (logical reordering). If fragmentation reaches greater than 30% fragmentation, we rebuild the index.
 
 ## Replication:
+
 
 ## Partitioning:
 
 ## Horizontal vs Vertical Partitioning:
 
 ## Sharding:
+
+### Consistent Hashing:
 
 ## Conclusion:
 
