@@ -126,19 +126,26 @@ Like this, when adding a new server we only need to move data from one node to a
 Whether your a backend developer or a database administrator, these concepts are the tools that are needed under our belt in order to be able to take action in whatever issue comes our way in our developing adventures. From creating an index on a column to knowing when to shard or replicate your database, these topics are essential for the fundamental understanding of Advanced Relational Databases.
 
 ## References:
-Big Resource: Fundamental of Database Engines by Hussein Nasser 
+
+### Big Resource: Fundamental of Database Engines by Hussein Nasser 
 (https://www.udemy.com/course/database-engines-crash-course/)
-Transactions:
+
+### Transactions:
 https://www.tutorialspoint.com/dbms/dbms_transaction.htm
 https://fauna.com/blog/introduction-to-transaction-isolation-levels
 https://youtu.be/CTCAo89fcQw
-ACID:
+
+### ACID:
 https://www.geeksforgeeks.org/acid-properties-in-dbms/?ref=lbp
 https://levelup.gitconnected.com/transaction-isolation-levels-in-ms-sql-guide-for-backend-developers-6a5998e34f6c
 https://sqlite.org/wal.html
-CAP: https://www.geeksforgeeks.org/the-cap-theorem-in-dbms/
+
+### CAP: 
+
+https://www.geeksforgeeks.org/the-cap-theorem-in-dbms/
 https://youtu.be/k-Yaq8AHlFA
-Indexing:
+
+### Indexing:
 https://chartio.com/learn/databases/how-does-indexing-work/
 https://www.geeksforgeeks.org/difference-between-clustered-and-non-clustered-index/#:~:text=A Clustered index is a,of the rows on disk.
 https://www.pgmustard.com/docs/explain/sequential-scan
@@ -146,9 +153,11 @@ https://www.spotlightcloud.io/blog/tips-for-fixing-sql-server-index-fragmentatio
 https://blog.devart.com/sql-server-index-fragmentation-in-depth.html
 https://www.sqlservercentral.com/forums/topic/index-fragmentation-and-ssds#:~:text=Index fragmentation is bad on,access is much%2C much faster.
 https://www.beyondtrust.com/docs/privileged-identity/faqs/reorganize-and-rebuild-indexes-in-database.htm#:~:text=Reorganizing an ind
-Sharding:
+
+### Sharding:
 https://youtu.be/iHNovZUZM3A
-Replication:
+
+### Replication:
 https://www.stitchdata.com/resources/data-replication
 
 
