@@ -147,11 +147,17 @@ https://youtu.be/k-Yaq8AHlFA
 
 ### Indexing:
 https://chartio.com/learn/databases/how-does-indexing-work/
+
 https://www.geeksforgeeks.org/difference-between-clustered-and-non-clustered-index/#:~:text=A Clustered index is a,of the rows on disk.
+
 https://www.pgmustard.com/docs/explain/sequential-scan
+
 https://www.spotlightcloud.io/blog/tips-for-fixing-sql-server-index-fragmentation#:~:text=External index fragmentation,separated from the original page.
+
 https://blog.devart.com/sql-server-index-fragmentation-in-depth.html
+
 https://www.sqlservercentral.com/forums/topic/index-fragmentation-and-ssds#:~:text=Index fragmentation is bad on,access is much%2C much faster.
+
 https://www.beyondtrust.com/docs/privileged-identity/faqs/reorganize-and-rebuild-indexes-in-database.htm#:~:text=Reorganizing an ind
 
 ### Sharding:
