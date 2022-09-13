@@ -60,14 +60,17 @@ Using Row versioning, Snapshot Isolation works by persisting the version of the 
 
 ### Serializeable vs Snapshot Isolation:
 While serializeable and snapshot both achieve isolation they have significant differences. Serializeable level uses locking which helps keeps the database consistent and avoids read phenomena however its more prone to deadlocks which can hinder from concurrency. Snapshot uses Row Versioning which helps with increased concurrency however its main disadvantage is its increased tempDB usage from the storage of the row versions. All in all, if your thinking of building a system thats read and write heavy go for serializeable but if your system is just read heavy and not alot of writes go for snapshot.
+
 ![Screenshot 2022-09-12 195103](https://user-images.githubusercontent.com/62875631/189713777-afc36a34-2202-46fb-a7bc-6acc58dd183b.png)
 
 ## CAP Theorem:
 Understanding the CAP Theorem is essential for designing how you want to design a distributed system. CAP stands for Consistency, Availability, and Partition Tolerance. There are three ways to design your system when using the CAP Theorem: CA(Consistent and Available), CP(Consistent and Partition Tolerant), AP (Available and Partition Tolerant). Lets take a ATM system as an example. If using CP, in the event of a partition(network problem, ATM crash), an ATM might close the user out of the system since it doesnt want him to withdraw or deposit and create inconsistent data with the other ATMs. On the other hand, using AP, an ATM can stay active after a partiion and allow withdrawals and deposits, and when the other ATMs come back online they will be updated with new changes. Finally, we can use CA if we think a partition is rare to occur and if it does we can just fix the problem and get it back online later.
+
 ![Screenshot 2022-09-13 114410](https://user-images.githubusercontent.com/62875631/189855513-309e0bee-e1e0-41b2-a955-508f09c244d6.png)
 
 ## Indexing:
 We use indexing to increase the speed at which queries are executed when dealing with large databases. When we create an Index on a column, we create a separate data structure that orders the data in way that helps search query efficiency. 
+
 ![Screenshot 2022-09-12 200247](https://user-images.githubusercontent.com/62875631/189713796-141df822-6fdb-436e-aaa0-0fe31025f15c.png)
 
 ### Clustered vs Non-Clustered Index:
@@ -90,16 +93,63 @@ Order of pages does not match physical ordering of pages making the searching no
 In order to avoid index fragmentation, we can use ever increasing/decreasing keys as to avoid inserts that will cause page splits. Also avoiding updates on keys to avoid page splits. Using index fill factors can help us keep enough space in a page for more inserts anticipating the page split problem. We can use the DBMS to check for fragmentation. If the fragmentation is less than 10% there is no need to fix index. If there is 10%-30% fragmentation, reorganize index (logical reordering). If fragmentation reaches greater than 30% fragmentation, we rebuild the index.
 
 ## Replication:
-
+Involves writing or copying data same data to different locations. It can be from between hosts in different locations or storage devices on same host or cloud based host. One technique for replication is using master/standby, which is having a master server that handles the main database operations and writes to standby nodes. This is done to improve accessibility, as well as achieving system fault-tolerance and reliability. Master/Standby can be implemented synchronously or asynchronously.
+Synchronous Replication means when the master recieves data operations it executes them and then applies them to standby immediately while Asycnhronous Replication wll write the changes to a log and apply them to standby at a later point.
 
 ## Partitioning:
+Partitioning is the process of splitting a database into multiple tables in order for queries to execute faster since there is less data to scan.
+The goal of partitioning is to decrease read and load data response time.
 
 ## Horizontal vs Vertical Partitioning:
+Horizontal Partitioning divides the table by rows (ex : Id0-100tbl Id101-200tbl) 
+
+![Screenshot 2022-09-13 150406](https://user-images.githubusercontent.com/62875631/189896320-3da9d49d-b9d3-46e2-b126-f4d2eb2f65d9.png)
+
+
+Vertical Partitioning divides the table by columns usually tries to seperate BLOB columns as to reduce accesss time on searches.
+
+![Screenshot 2022-09-13 150424](https://user-images.githubusercontent.com/62875631/189896345-58264132-5c36-4011-bcbb-650abe1b0e79.png)
+
 
 ## Sharding:
+Partitioning database into multiple database servers with the same schema.
+![1_WOSlzP8PKH8bWQdmI6JnDw](https://user-images.githubusercontent.com/62875631/189898573-fbea2475-9ee3-4ab2-9551-8d2871945293.png)
 
 ### Consistent Hashing:
+When sharding we use hashing to query on the correct server. If we have for an example a hash function that hashes to 4 servers and we decide to add a new server, the hashing function has to be adjusted for 5 servers and therefore we have to move data from server to server to match the new hash function which can be very costly. By using consistent hashing, we can reduce the amount of data we are moving around significantly. 
+
+![Screenshot 2022-09-13 153230](https://user-images.githubusercontent.com/62875631/189901783-3dfbffd2-0cdc-4ae5-a17a-ed8614728cfa.png)
+
+Like this, when adding a new server we only need to move data from one node to another which is much better.
 
 ## Conclusion:
+Whether your a backend developer or a database administrator, these concepts are the tools that are needed under our belt in order to be able to take action in whatever issue comes our way in our developing adventures. From creating an index on a column to knowing when to shard or replicate your database, these topics are essential for the fundamental understanding of Advanced Relational Databases.
+
+## References:
+Big Resource: Fundamental of Database Engines by Hussein Nasser 
+(https://www.udemy.com/course/database-engines-crash-course/)
+Transactions:
+https://www.tutorialspoint.com/dbms/dbms_transaction.htm
+https://fauna.com/blog/introduction-to-transaction-isolation-levels
+https://youtu.be/CTCAo89fcQw
+ACID:
+https://www.geeksforgeeks.org/acid-properties-in-dbms/?ref=lbp
+https://levelup.gitconnected.com/transaction-isolation-levels-in-ms-sql-guide-for-backend-developers-6a5998e34f6c
+https://sqlite.org/wal.html
+CAP: https://www.geeksforgeeks.org/the-cap-theorem-in-dbms/
+https://youtu.be/k-Yaq8AHlFA
+Indexing:
+https://chartio.com/learn/databases/how-does-indexing-work/
+https://www.geeksforgeeks.org/difference-between-clustered-and-non-clustered-index/#:~:text=A Clustered index is a,of the rows on disk.
+https://www.pgmustard.com/docs/explain/sequential-scan
+https://www.spotlightcloud.io/blog/tips-for-fixing-sql-server-index-fragmentation#:~:text=External index fragmentation,separated from the original page.
+https://blog.devart.com/sql-server-index-fragmentation-in-depth.html
+https://www.sqlservercentral.com/forums/topic/index-fragmentation-and-ssds#:~:text=Index fragmentation is bad on,access is much%2C much faster.
+https://www.beyondtrust.com/docs/privileged-identity/faqs/reorganize-and-rebuild-indexes-in-database.htm#:~:text=Reorganizing an ind
+Sharding:
+https://youtu.be/iHNovZUZM3A
+Replication:
+https://www.stitchdata.com/resources/data-replication
+
 
 
